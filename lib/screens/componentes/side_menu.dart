@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:studio_admin/constants.dart';
+
+import '../../responsive.dart';
 
 class SideMenu extends StatelessWidget {
   const SideMenu({
@@ -13,28 +16,33 @@ class SideMenu extends StatelessWidget {
         child: Column(
           children: [
             DrawerHeader(
-              child: Image.asset("assets/images/logo.png"),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Image.asset(dirAssetsImages + "logo.png"),
+                  ProfileCard()
+                ],
+              ),
             ),
             DrawerListTile(
                 title: "Dashboard",
-                svgSrc: "assets/icons/menu_dashbord.svg",
-                press: () {}),
-            DrawerListTile(title: "Produtos", svgSrc: "", press: () {}),
-            DrawerListTile(
-                title: "Task",
-                svgSrc: "assets/icons/menu_task.svg",
+                svgSrc: dirAssetsIcons + "menu_dashbord.svg",
                 press: () {}),
             DrawerListTile(
-                title: "Documents",
-                svgSrc: "assets/icons/menu_doc.svg",
+                title: "Vendas",
+                svgSrc: dirAssetsIcons + "menu_venda.svg",
                 press: () {}),
             DrawerListTile(
-                title: "Store",
-                svgSrc: "assets/icons/menu_store.svg",
+                title: "Compras",
+                svgSrc: dirAssetsIcons + "menu_compra.svg",
                 press: () {}),
             DrawerListTile(
-                title: "Notification",
-                svgSrc: "assets/icons/menu_notification.svg",
+                title: "Financeiro",
+                svgSrc: dirAssetsIcons + "menu_financeiro.svg",
+                press: () {}),
+            DrawerListTile(
+                title: "Fábrica",
+                svgSrc: dirAssetsIcons + "menu_fabrica.svg",
                 press: () {}),
           ],
         ),
@@ -49,11 +57,10 @@ class DrawerListTile extends StatelessWidget {
     required this.title,
     required this.svgSrc,
     required this.press,
-    this.iconLink = 'https://img.icons8.com/wired/344/grocery-shelf.png',
     this.exibirTitle = true,
   }) : super(key: key);
 
-  final String title, svgSrc, iconLink;
+  final String title, svgSrc;
   final VoidCallback press;
   final bool exibirTitle;
 
@@ -62,15 +69,45 @@ class DrawerListTile extends StatelessWidget {
     return ListTile(
       onTap: press,
       horizontalTitleGap: 0.0,
-      leading: (svgSrc != '')
-          ? SvgPicture.asset(
-              svgSrc,
-              color: Colors.white54,
-              height: 16,
-            )
-          : Image.network(iconLink),
+      leading: SvgPicture.asset(
+        svgSrc,
+        color: Colors.white54,
+        height: 16,
+      ),
       title: Text((exibirTitle) ? title : "",
           style: TextStyle(color: Colors.white54)),
+    );
+  }
+}
+
+class ProfileCard extends StatelessWidget {
+  const ProfileCard({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(left: defaultPadding),
+      padding: EdgeInsets.symmetric(
+          horizontal: defaultPadding, vertical: defaultPadding / 2),
+      decoration: BoxDecoration(
+        color: secondaryColor,
+        //borderRadius: BorderRadiusCircular10(),
+        /*border: Border.all(color: Colors.white10)*/
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset("assets/images/profile_pic.png", height: 38),
+          //if (!Responsive.isMobile(context))
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: defaultPadding / 2),
+            child: Text("Angelia Joli"),
+          ),
+          //Icon(Icons.keyboard_arrow_down)
+        ],
+      ),
     );
   }
 }
